@@ -1,9 +1,9 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "license": "MIT",
-  "author": "Rozen Raymond",
-  "main": "index.js",
+  "private": true,
+  "module": "true",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "db:generate": "npx prisma generate",

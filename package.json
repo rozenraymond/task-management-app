@@ -2,7 +2,6 @@
   "name": "task-management-platform",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "build": "turbo run build",
@@ -12,7 +11,5 @@
   "devDependencies": {
     "turbo": "^2.1.1"
   },
-  "packageManager": "yarn@1.22.22",
-  "author": "Rozen Raymond",
-  "license": "MIT"
+  "packageManager": "yarn@1.22.22"
 }
