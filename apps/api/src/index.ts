@@ -51,7 +51,16 @@ app.put('/task/:id', async(req, res) => {
   });
 
   res.json(task);
-})
+});
+
+app.delete('/task/:id', async(req, res) => {
+  const { id } = req.params;
+  const task = await prisma.task.delete({
+    where: { id: Number(id) },
+  });
+
+  res.json({ id: task.id});
+});
 
 
 

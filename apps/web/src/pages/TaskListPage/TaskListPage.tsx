@@ -1,10 +1,15 @@
-import { useTasks } from "./hooks";
+import { useDeleteTask, useTasks } from "./hooks";
 import { TaskListTable } from "./components/TaskListTable";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export const TaskListPage = () => {
   const { data } = useTasks();
+  const { mutateAsync: deleteTask } = useDeleteTask();
+
+  const handleDeleteTask = async (id: string) => {
+    await deleteTask(id);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -17,7 +22,7 @@ export const TaskListPage = () => {
         </Button>
       </div>
 
-      <TaskListTable tasks={data} />
+      <TaskListTable tasks={data} onDeleteTask={handleDeleteTask} />
     </div>
   );
 };
