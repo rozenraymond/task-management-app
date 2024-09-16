@@ -6,25 +6,35 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "db:generate": "npx prisma generate",
-    "db:migrate:dev": "npx prisma migrate dev",
-    "db:migrate": "npx prisma migrate deploy",
-    "db:seed": "npx prisma db seed",
-    "db:up": "docker-compose up -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "start:prod": "yarn prisma:migrate && yarn prisma:seed && yarn start",
+    "lint": "eslint src --ext .ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:studio": "prisma studio",
+    "clean": "rm -rf dist",
+    "docker:build": "docker build -t task-app-api .",
+    "docker:run": "docker run -p 3000:3000 task-app-api"
   },
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/node": "^22.5.4",
-    "@types/pg": "^8.11.9",
+    "@types/node": "^22.5.5",
+    "@types/pg": "^8.11.10",
     "prisma": "^5.19.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
-    "express": "^4.21.0"
+    "@task-management-platform/validation": "*",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "zod": "^3.23.8"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
