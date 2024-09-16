@@ -26,7 +26,34 @@ app.post('/task', async(req, res) => {
   });
 
   res.json(task);
+});
+
+app.get('/task/:id', async(req, res) => {
+  const { id } = req.params;
+  const task = await prisma.task.findUnique({
+    where: { id: Number(id) },
+  });
+
+  res.json(task);
+});
+
+app.put('/task/:id', async(req, res) => {
+  const { id } = req.params;
+  const { name, description, dueDate } = req.body;
+
+  const task = await prisma.task.update({
+    where: { id: Number(id) },
+    data: {
+      name,
+      description,
+      dueDate,
+    },
+  });
+
+  res.json(task);
 })
+
+
 
 const server = app.listen(3000, () =>
   console.log(`

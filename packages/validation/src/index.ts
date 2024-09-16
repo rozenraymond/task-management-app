@@ -1,6 +1,7 @@
-export { taskFormSchema } from './task';
+export { taskFormSchema, updateTaskFormSchema } from './task';
 
 export type {
     Task,
-    TaskFormSchema
+    TaskFormSchema,
+    UpdateTaskFormSchema
 } from './task';

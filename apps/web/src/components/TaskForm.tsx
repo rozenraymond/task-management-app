@@ -29,9 +29,20 @@ interface TaskFormProps {
   isSubmitting?: boolean;
 }
 
-export const TaskForm = ({ onSubmit, isSubmitting }: TaskFormProps) => {
+export const TaskForm = ({
+  onSubmit,
+  isSubmitting,
+  defaultValues,
+}: TaskFormProps) => {
   const form = useForm<TaskFormSchema>({
     resolver: zodResolver(taskFormSchema),
+    defaultValues: {
+      name: defaultValues?.name || "",
+      description: defaultValues?.description || "",
+      dueDate: defaultValues?.dueDate
+        ? new Date(defaultValues.dueDate)
+        : new Date(),
+    },
   });
 
   return (

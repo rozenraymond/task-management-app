@@ -18,4 +18,9 @@ export const taskFormSchema = z.object({
     }),
 });
 
+export const updateTaskFormSchema = taskFormSchema.extend({
+    id: z.string(),
+});
+
 export type TaskFormSchema = z.infer<typeof taskFormSchema>;
+export type UpdateTaskFormSchema = z.infer<typeof updateTaskFormSchema>;
