@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { TaskFormSchema } from "@task-management-platform/validation";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTask, useUpdateTask } from "./hooks";
-import { Spinner } from "@/components/ui/spinner";
+import { Loader2 } from "lucide-react";
 
 export const EditTaskPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +21,7 @@ export const EditTaskPage = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 space-y-4">
-        <Spinner className="text-green-600" />
+        <Loader2 className="mr-2 h-10 w-10 animate-spin" />
       </div>
     );
   }

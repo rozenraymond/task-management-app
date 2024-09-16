@@ -9,7 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Task } from "@task-management-platform/validation";
-import { format } from "date-fns";
+import {
+  addDays,
+  endOfDay,
+  format,
+  isBefore,
+  isWithinInterval,
+} from "date-fns";
 import { Link } from "react-router-dom";
 import { DeleteTaskConfirmationModal } from "./DeleteTaskConfirmationModal";
 import { useState } from "react";
@@ -58,6 +64,8 @@ export const TaskListTable = ({ tasks, onDeleteTask }: TaskListTableProps) => {
             <TableHead>Name</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Due Date</TableHead>
+            <TableHead>Create Date</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -69,6 +77,8 @@ export const TaskListTable = ({ tasks, onDeleteTask }: TaskListTableProps) => {
                 <TableCell>{task.name}</TableCell>
                 <TableCell>{task.description}</TableCell>
                 <TableCell>{format(task.dueDate, "do MMM yyyy")}</TableCell>
+                <TableCell>{format(task.createdAt, "do MMM yyyy")}</TableCell>
+                <TableCell>{getTaskStatus(new Date(task.dueDate))}</TableCell>
                 <TableCell>
                   <Button asChild className="mr-2">
                     <Link to={`/edit/${task.id}`}>Edit</Link>
@@ -95,4 +105,20 @@ export const TaskListTable = ({ tasks, onDeleteTask }: TaskListTableProps) => {
       />
     </>
   );
+};
+
+const getTaskStatus = (dueDate: Date) => {
+  const today = endOfDay(new Date());
+
+  if (isBefore(dueDate, today)) {
+    return "Overdue";
+  }
+
+  const sevenDaysFromNow = addDays(today, 7);
+
+  if (isWithinInterval(dueDate, { start: today, end: sevenDaysFromNow })) {
+    return "Due soon";
+  }
+
+  return "Not Urgent";
 };

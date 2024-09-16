@@ -21,7 +21,7 @@ import { format, startOfToday } from "date-fns";
 import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { Spinner } from "./ui/spinner";
+import { Loader2 } from "lucide-react";
 
 interface TaskFormProps {
   defaultValues?: Task;
@@ -119,8 +119,8 @@ export const TaskForm = ({
           )}
         />
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <Spinner className="mr-2" />}
-          {isSubmitting ? "Loading..." : "Submit"}
+          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Form>
