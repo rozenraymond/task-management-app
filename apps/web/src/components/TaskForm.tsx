@@ -85,7 +85,7 @@ export const TaskForm = ({
           name="dueDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Due date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
