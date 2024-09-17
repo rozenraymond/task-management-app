@@ -2,22 +2,22 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { API_BASE_URL, queryClient } from "@/lib/client";
 import { Task } from "@task-management-platform/validation";
 
-export const ITEMS_PER_PAGE = 10;
-
 const fetchTasks = async ({
   page,
   searchTerm,
   sortBy,
   sortOrder,
+  itemsPerPage,
 }: {
   page: number;
   searchTerm: string;
   sortBy: string;
   sortOrder: "asc" | "desc";
+  itemsPerPage: number;
 }): Promise<{ totalCount: number; tasks: Array<Task> }> => {
-  const skip = (page - 1) * ITEMS_PER_PAGE;
+  const skip = (page - 1) * itemsPerPage;
   const response = await fetch(
-    `${API_BASE_URL}/tasks?skip=${skip}&take=${ITEMS_PER_PAGE}&searchTerm=${searchTerm}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+    `${API_BASE_URL}/tasks?skip=${skip}&take=${itemsPerPage}&searchTerm=${searchTerm}&sortBy=${sortBy}&sortOrder=${sortOrder}`
   );
 
   if (!response.ok) {
@@ -33,15 +33,18 @@ export const useTasks = ({
   searchTerm,
   sortBy,
   sortOrder,
+  itemsPerPage,
 }: {
   page: number;
   searchTerm: string;
   sortBy: string;
   sortOrder: "asc" | "desc";
+  itemsPerPage: number;
 }) => {
   return useQuery({
-    queryKey: ["tasks", page, searchTerm, sortBy, sortOrder],
-    queryFn: () => fetchTasks({ page, searchTerm, sortBy, sortOrder }),
+    queryKey: ["tasks", page, searchTerm, sortBy, sortOrder, itemsPerPage],
+    queryFn: () =>
+      fetchTasks({ page, searchTerm, sortBy, sortOrder, itemsPerPage }),
   });
 };
 

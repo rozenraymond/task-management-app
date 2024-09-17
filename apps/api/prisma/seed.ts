@@ -12,7 +12,7 @@ function createFakeTask(): Prisma.TaskCreateInput {
 }
 
 const taskData: Prisma.TaskCreateInput[] = Array.from(
-  { length: 50 },
+  { length: 200 },
   createFakeTask
 );
 

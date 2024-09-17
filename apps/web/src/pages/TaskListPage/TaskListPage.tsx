@@ -1,21 +1,30 @@
-import { ITEMS_PER_PAGE, useDeleteTask, useTasks } from "./hooks";
+import { useDeleteTask, useTasks } from "./hooks";
 import { TaskListTable } from "./components/TaskListTable";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { useTaskListStore } from "@/lib/store";
 
 export const TaskListPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<"createdAt" | "dueDate">("createdAt");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const {
+    currentPage,
+    itemsPerPage,
+    searchTerm,
+    sortBy,
+    sortOrder,
+    setCurrentPage,
+    setItemsPerPage,
+    setSearchTerm,
+    setSortBy,
+    setSortOrder,
+  } = useTaskListStore();
 
   const { data, isLoading, isError, error } = useTasks({
     page: currentPage,
     searchTerm,
     sortBy,
     sortOrder,
+    itemsPerPage,
   });
 
   const debouncedSearch = useDebouncedCallback((term: string) => {
@@ -42,12 +51,17 @@ export const TaskListPage = () => {
     setCurrentPage(page);
   };
 
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
   if (isError) {
     return <div>Error: {(error as Error).message}</div>;
   }
 
   const totalPages = Math.max(
-    Math.ceil((data?.totalCount ?? 0) / ITEMS_PER_PAGE),
+    Math.ceil((data?.totalCount ?? 0) / itemsPerPage),
     1
   );
 
@@ -68,11 +82,15 @@ export const TaskListPage = () => {
         onSearch={debouncedSearch}
         onSort={handleSort}
         onPageChange={handlePageChange}
+        onItemsPerPageChange={handleItemsPerPageChange}
         currentPage={currentPage}
         totalPages={totalPages}
         totalItems={data?.totalCount || 0}
-        itemsPerPage={ITEMS_PER_PAGE}
+        itemsPerPage={itemsPerPage}
         isLoading={isLoading}
+        searchTerm={searchTerm}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
       />
     </div>
   );
