@@ -75,8 +75,6 @@ export const TaskListTable = ({
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [internalSearchTerm, setInternalSearchTerm] = useState(searchTerm);
 
-  const parentRef = React.useRef<HTMLDivElement>(null);
-
   const handleOpenDeleteModal = useCallback((task: Task) => {
     setSelectedTask(task);
     setIsDeleteModalOpen(true);
@@ -193,7 +191,7 @@ export const TaskListTable = ({
             </TableRow>
           </TableHeader>
 
-          <TableBody ref={parentRef}>
+          <TableBody>
             {isLoading || !tasks ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center">

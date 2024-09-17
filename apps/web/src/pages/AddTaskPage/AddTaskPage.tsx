@@ -5,13 +5,17 @@ import { useCreateTask } from "./hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
+import { endOfDay } from "date-fns";
 
 export const AddTaskPage = () => {
   const { mutateAsync: createTask, isPending } = useCreateTask();
   const navigate = useNavigate();
 
   const handleSubmit = async (formValue: TaskFormSchema) => {
-    await createTask(formValue);
+    await createTask({
+      ...formValue,
+      dueDate: endOfDay(formValue.dueDate).toISOString(),
+    });
     navigate("/");
   };
 

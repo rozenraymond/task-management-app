@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTask, useUpdateTask } from "./hooks";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { endOfDay } from "date-fns";
 
 export const EditTaskPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,14 +16,18 @@ export const EditTaskPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (value: TaskFormSchema) => {
-    await updateTask({ id: id || "", ...value });
+    await updateTask({
+      ...value,
+      id: id || "",
+      dueDate: endOfDay(value.dueDate).toISOString(),
+    });
     navigate("/");
   };
 
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 space-y-4">
-        <Loader2 className="mr-2 h-10 w-10 animate-spin" />
+        <Loader2 aria-label="spinner" className="mr-2 h-10 w-10 animate-spin" />
       </div>
     );
   }
