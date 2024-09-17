@@ -2,10 +2,7 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import {
-  taskFormSchema,
-  updateTaskFormSchema,
-} from "@task-management-platform/validation";
+import { taskFormSchema } from "@task-management-platform/validation";
 import { validateRequestBody } from "./middleware/validator";
 
 const prisma = new PrismaClient();
@@ -74,34 +71,32 @@ app.get("/task/:id", async (req, res) => {
   res.json(task);
 });
 
-app.put(
-  "/task/:id",
-  validateRequestBody(updateTaskFormSchema),
-  async (req, res) => {
-    const { id } = req.params;
+app.put("/task/:id", validateRequestBody(taskFormSchema), async (req, res) => {
+  const { id } = req.params;
 
-    const existingTask = await prisma.task.findUnique({
-      where: { id },
-    });
+  console.log("id", id);
 
-    if (!existingTask) {
-      return res.status(404).json({ message: "Task not found" });
-    }
+  const existingTask = await prisma.task.findUnique({
+    where: { id },
+  });
 
-    const { name, description, dueDate } = req.body;
-
-    const task = await prisma.task.update({
-      where: { id },
-      data: {
-        name,
-        description,
-        dueDate,
-      },
-    });
-
-    res.json(task);
+  if (!existingTask) {
+    return res.status(404).json({ message: "Task not found" });
   }
-);
+
+  const { name, description, dueDate } = req.body;
+
+  const task = await prisma.task.update({
+    where: { id },
+    data: {
+      name,
+      description,
+      dueDate,
+    },
+  });
+
+  res.json(task);
+});
 
 app.delete("/task/:id", async (req, res) => {
   const { id } = req.params;

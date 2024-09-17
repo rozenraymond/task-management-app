@@ -16,12 +16,14 @@ export const EditTaskPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (value: TaskFormSchema) => {
-    await updateTask({
-      ...value,
-      id: id || "",
-      dueDate: endOfDay(value.dueDate).toISOString(),
-    });
-    navigate("/");
+    if (id) {
+      await updateTask({
+        ...value,
+        id,
+        dueDate: endOfDay(value.dueDate).toISOString(),
+      });
+      navigate("/");
+    }
   };
 
   if (isLoading) {

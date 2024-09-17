@@ -1,9 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { API_BASE_URL } from "@/lib/client";
-import {
-  Task,
-  UpdateTaskFormSchema,
-} from "@task-management-platform/validation";
+import { Task, TaskFormSchema } from "@task-management-platform/validation";
 
 const fetchTaskById = async (id?: string): Promise<Task> => {
   const response = await fetch(`${API_BASE_URL}/task/${id}`);
@@ -19,14 +16,16 @@ export const useTask = (id?: string) => {
   });
 };
 
-const updateTask = async (task: UpdateTaskFormSchema): Promise<Task> => {
-  const { id, ...rest } = task;
+const updateTask = async ({
+  id,
+  ...task
+}: TaskFormSchema & { id: string }): Promise<Task> => {
   const response = await fetch(`${API_BASE_URL}/task/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(rest),
+    body: JSON.stringify(task),
   });
   const data = await response.json();
   return data;

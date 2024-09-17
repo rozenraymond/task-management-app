@@ -32,7 +32,7 @@ describe("EditTaskPage", () => {
     vi.spyOn(hooks, "useUpdateTask").mockReturnValue({
       mutateAsync: mockUpdateTask,
       isPending: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useUpdateTask>);
   });
 
   afterEach(() => {
@@ -43,7 +43,7 @@ describe("EditTaskPage", () => {
     vi.spyOn(hooks, "useTask").mockReturnValue({
       isLoading: true,
       data: undefined,
-    });
+    } as unknown as ReturnType<typeof hooks.useTask>);
 
     render(<EditTaskPage />);
 
@@ -61,7 +61,7 @@ describe("EditTaskPage", () => {
     vi.spyOn(hooks, "useTask").mockReturnValue({
       data: mockTaskData,
       isLoading: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useTask>);
 
     render(<EditTaskPage />);
 
@@ -72,7 +72,17 @@ describe("EditTaskPage", () => {
   });
 
   it("navigates back when clicking the back button", () => {
-    vi.spyOn(hooks, "useTask").mockReturnValue({ data: {}, isLoading: false });
+    const mockTaskData = {
+      id: "123",
+      name: "Test Task",
+      description: "Test Description",
+      dueDate: "2024-09-17T23:59:59.999Z",
+    };
+
+    vi.spyOn(hooks, "useTask").mockReturnValue({
+      data: mockTaskData,
+      isLoading: false,
+    } as unknown as ReturnType<typeof hooks.useTask>);
 
     render(<EditTaskPage />);
 
@@ -92,7 +102,7 @@ describe("EditTaskPage", () => {
     vi.spyOn(hooks, "useTask").mockReturnValue({
       data: mockTaskData,
       isLoading: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useTask>);
 
     render(<EditTaskPage />);
 
@@ -131,12 +141,14 @@ describe("EditTaskPage", () => {
     vi.spyOn(hooks, "useTask").mockReturnValue({
       data: mockTaskData,
       isLoading: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useTask>);
+
     const mockUpdateTaskFn = vi.fn().mockResolvedValue({ success: true });
+
     vi.spyOn(hooks, "useUpdateTask").mockReturnValue({
       mutateAsync: mockUpdateTaskFn,
       isPending: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useUpdateTask>);
 
     render(<EditTaskPage />);
 

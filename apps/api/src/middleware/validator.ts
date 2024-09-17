@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const validateRequestBody = (schema: z.ZodType<any, any>) => {
+export const validateRequestBody = <T>(schema: z.ZodSchema<T>) => {
   return (req: any, res: any, next: any) => {
     try {
       schema.parse(req.body);

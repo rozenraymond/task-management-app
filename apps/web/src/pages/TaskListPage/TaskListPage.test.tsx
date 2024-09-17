@@ -35,11 +35,11 @@ describe("TaskListPage", () => {
       isLoading: false,
       isError: false,
       error: null,
-    });
+    } as unknown as ReturnType<typeof hooks.useTasks>);
 
     vi.spyOn(hooks, "useDeleteTask").mockReturnValue({
       mutateAsync: vi.fn(),
-    });
+    } as unknown as ReturnType<typeof hooks.useDeleteTask>);
 
     vi.spyOn(store, "useTaskListStore").mockReturnValue({
       currentPage: 1,
@@ -69,7 +69,7 @@ describe("TaskListPage", () => {
       isLoading: false,
       isError: true,
       error: new Error("Test error"),
-    });
+    } as unknown as ReturnType<typeof hooks.useTasks>);
 
     render(<TaskListPage />);
 

@@ -42,7 +42,7 @@ describe("AddTaskPage", () => {
     vi.spyOn(hooks, "useCreateTask").mockReturnValue({
       mutateAsync: mockCreateTask,
       isPending: false,
-    });
+    } as unknown as ReturnType<typeof hooks.useCreateTask>);
   });
 
   it("renders the AddTaskPage component", () => {
@@ -84,7 +84,7 @@ describe("AddTaskPage", () => {
           () => new Promise((resolve) => setTimeout(resolve, 1000))
         ),
       isPending: true,
-    });
+    } as unknown as ReturnType<typeof hooks.useCreateTask>);
 
     render(<AddTaskPage />);
 

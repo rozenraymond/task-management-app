@@ -9,13 +9,13 @@ COPY package.json yarn.lock ./
 
 # Copy all package.json files from workspaces
 COPY apps/api/package.json ./apps/api/
-COPY packages/validation/package.json ./packages/validation/
+COPY packages/validation/ ./packages/validation/
 
 # Install dependencies
 RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application code
-COPY . .
+COPY apps/api/ ./apps/api/
 
 WORKDIR /app/apps/api
 
