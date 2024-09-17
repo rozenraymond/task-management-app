@@ -39,9 +39,7 @@ export const TaskForm = ({
     defaultValues: {
       name: defaultValues?.name || "",
       description: defaultValues?.description || "",
-      dueDate: defaultValues?.dueDate
-        ? new Date(defaultValues.dueDate)
-        : new Date(),
+      dueDate: defaultValues?.dueDate ?? "",
     },
   });
 
@@ -108,8 +106,10 @@ export const TaskForm = ({
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
+                    selected={new Date(field.value)}
+                    onSelect={(value) => {
+                      field.onChange(value?.toISOString());
+                    }}
                     disabled={(date) => date < startOfToday()}
                   />
                 </PopoverContent>

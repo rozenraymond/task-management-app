@@ -36,6 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React from "react";
+import { StatusBadge } from "./StatusBadge";
 
 interface TaskListTableProps {
   tasks?: Task[];
@@ -216,7 +217,11 @@ export const TaskListTable = ({
                   <TableCell>
                     {format(new Date(task.createdAt), "do MMM yyyy")}
                   </TableCell>
-                  <TableCell>{getTaskStatus(new Date(task.dueDate))}</TableCell>
+                  <TableCell className="whitespace-nowrap text-center">
+                    <StatusBadge
+                      status={getTaskStatus(new Date(task.dueDate))}
+                    />
+                  </TableCell>
                   <TableCell>
                     <div className="flex">
                       <Button size="sm" variant="link" asChild className="mr-2">

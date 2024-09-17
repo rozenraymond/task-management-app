@@ -2,6 +2,11 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import {
+  taskFormSchema,
+  updateTaskFormSchema,
+} from "@task-management-platform/validation";
+import { validateRequestBody } from "./middleware/validator";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -42,7 +47,7 @@ app.get("/tasks", async (req, res) => {
   res.json({ tasks, totalCount });
 });
 
-app.post("/task", async (req, res) => {
+app.post("/task", validateRequestBody(taskFormSchema), async (req, res) => {
   const { name, description, dueDate } = req.body;
   const task = await prisma.task.create({
     data: {
@@ -64,21 +69,25 @@ app.get("/task/:id", async (req, res) => {
   res.json(task);
 });
 
-app.put("/task/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, description, dueDate } = req.body;
+app.put(
+  "/task/:id",
+  validateRequestBody(updateTaskFormSchema),
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, description, dueDate } = req.body;
 
-  const task = await prisma.task.update({
-    where: { id },
-    data: {
-      name,
-      description,
-      dueDate,
-    },
-  });
+    const task = await prisma.task.update({
+      where: { id },
+      data: {
+        name,
+        description,
+        dueDate,
+      },
+    });
 
-  res.json(task);
-});
+    res.json(task);
+  }
+);
 
 app.delete("/task/:id", async (req, res) => {
   const { id } = req.params;
