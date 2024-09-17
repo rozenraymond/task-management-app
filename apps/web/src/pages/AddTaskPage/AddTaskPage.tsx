@@ -1,11 +1,12 @@
-import { TaskForm } from "@/components/TaskForm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TaskFormSchema } from "@task-management-platform/validation";
-import { useCreateTask } from "./hooks";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { endOfDay } from "date-fns";
+import { TaskForm } from '@/components/TaskForm';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { TaskFormSchema } from '@task-management-platform/validation';
+import { endOfDay } from 'date-fns';
+import { ChevronLeft } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useCreateTask } from './hooks';
 
 export const AddTaskPage = () => {
   const { mutateAsync: createTask, isPending } = useCreateTask();
@@ -16,7 +17,7 @@ export const AddTaskPage = () => {
       ...formValue,
       dueDate: endOfDay(formValue.dueDate).toISOString(),
     });
-    navigate("/");
+    navigate('/');
   };
 
   return (

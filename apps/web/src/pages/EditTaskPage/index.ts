@@ -1,1 +1,1 @@
-export { EditTaskPage as default } from "./EditTaskPage";
+export { EditTaskPage as default } from './EditTaskPage';

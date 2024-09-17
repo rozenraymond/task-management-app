@@ -1,5 +1,5 @@
-import { PrismaClient, Prisma } from "@prisma/client";
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -7,13 +7,14 @@ function createFakeTask(): Prisma.TaskCreateInput {
   return {
     name: `${faker.hacker.verb()} ${faker.hacker.noun()}`,
     description: faker.lorem.sentences(3),
-    dueDate: faker.date.future(),
+    dueDate: faker.date.soon({ days: Math.ceil(Math.random() * 30) }),
+    createdAt: faker.date.recent({ days: Math.ceil(Math.random() * 14) }),
   };
 }
 
 const taskData: Prisma.TaskCreateInput[] = Array.from(
   { length: 200 },
-  createFakeTask
+  createFakeTask,
 );
 
 async function main() {

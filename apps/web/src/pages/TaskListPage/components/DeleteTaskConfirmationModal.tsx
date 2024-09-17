@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface DeleteTaskConfirmationModalProps {
   isOpen: boolean;
@@ -27,7 +27,7 @@ export const DeleteTaskConfirmationModal = ({
             Delete Task
           </h2>
           <p className="text-sm text-muted-foreground">
-            {`Are you sure you want to delete ${taskName ?? "this task"}?`}
+            {`Are you sure you want to delete ${taskName ?? 'this task'}?`}
           </p>
         </DialogHeader>
         <DialogFooter>

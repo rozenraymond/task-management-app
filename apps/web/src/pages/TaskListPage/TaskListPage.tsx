@@ -1,9 +1,10 @@
-import { useDeleteTask, useTasks } from "./hooks";
-import { TaskListTable } from "./components/TaskListTable";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useDebouncedCallback } from "use-debounce";
-import { useTaskListStore } from "@/lib/store";
+import { Button } from '@/components/ui/button';
+import { useTaskListStore } from '@/lib/store';
+import { Link } from 'react-router-dom';
+import { useDebouncedCallback } from 'use-debounce';
+
+import { TaskListTable } from './components/TaskListTable';
+import { useDeleteTask, useTasks } from './hooks';
 
 export const TaskListPage = () => {
   const {
@@ -39,8 +40,8 @@ export const TaskListPage = () => {
   };
 
   const handleSort = (
-    newSortBy: "createdAt" | "dueDate",
-    newSortOrder: "asc" | "desc"
+    newSortBy: 'createdAt' | 'dueDate',
+    newSortOrder: 'asc' | 'desc',
   ) => {
     setSortBy(newSortBy);
     setSortOrder(newSortOrder);
@@ -62,11 +63,11 @@ export const TaskListPage = () => {
 
   const totalPages = Math.max(
     Math.ceil((data?.totalCount ?? 0) / itemsPerPage),
-    1
+    1,
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="lg:container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 text-center">
         Task Management App
       </h1>

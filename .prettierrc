@@ -1,0 +1,17 @@
+{
+    "singleQuote": true,
+    "trailingComma": "all",
+    "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+    "importOrder": [
+      "^(react/(.*)$)|^(react$)",
+      "^(react-native/(.*)$)|^(react-native$)",
+      "<THIRD_PARTY_MODULES>",
+      "",
+      "^@t-cards/(.*)$",
+      "",
+      "^~/(.*)$",
+      "",
+      "^[.]"
+    ],
+    "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
+  }

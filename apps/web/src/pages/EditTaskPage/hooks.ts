@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { API_BASE_URL } from "@/lib/client";
-import { Task, TaskFormSchema } from "@task-management-platform/validation";
+import { API_BASE_URL } from '@/lib/client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Task, TaskFormSchema } from '@task-management-platform/validation';
 
 const fetchTaskById = async (id?: string): Promise<Task> => {
   const response = await fetch(`${API_BASE_URL}/task/${id}`);
@@ -10,7 +10,7 @@ const fetchTaskById = async (id?: string): Promise<Task> => {
 
 export const useTask = (id?: string) => {
   return useQuery({
-    queryKey: ["task", id],
+    queryKey: ['task', id],
     queryFn: () => fetchTaskById(id),
     enabled: !!id,
   });
@@ -21,9 +21,9 @@ const updateTask = async ({
   ...task
 }: TaskFormSchema & { id: string }): Promise<Task> => {
   const response = await fetch(`${API_BASE_URL}/task/${id}`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(task),
   });
@@ -37,10 +37,10 @@ export const useUpdateTask = () => {
     mutationFn: updateTask,
     onSuccess: (data) => {
       // Invalidate the specific task query
-      queryClient.invalidateQueries({ queryKey: ["task", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['task', data.id] });
 
       // Invalidate all tasks queries
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 };

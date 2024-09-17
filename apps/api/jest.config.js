@@ -1,18 +1,15 @@
+/** @type {import('jest').Config} */
 const config = {
-  verbose: true,
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
-    '^.+\\.ts?$': [
-      'ts-jest',
-      {
-        useESM: true
-      }
-    ]
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
-    '@/(.*)': ['<rootDir>/src/$1']
-  }
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 };
 
-export default config;
+module.exports = config;

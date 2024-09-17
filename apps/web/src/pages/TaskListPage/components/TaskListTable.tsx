@@ -1,4 +1,19 @@
-import { Button } from "@/components/ui/button";
+import React, { useCallback, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Table,
   TableBody,
@@ -6,43 +21,27 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Task } from "@task-management-platform/validation";
+} from '@/components/ui/table';
+import { CaretSortIcon } from '@radix-ui/react-icons';
+import { Task } from '@task-management-platform/validation';
 import {
   addDays,
   endOfDay,
   format,
   isBefore,
   isWithinInterval,
-} from "date-fns";
-import { Link } from "react-router-dom";
-import { DeleteTaskConfirmationModal } from "./DeleteTaskConfirmationModal";
-import { useCallback, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { ArrowDownIcon, ArrowUpIcon, XIcon } from "lucide-react";
+} from 'date-fns';
+import { ArrowDownIcon, ArrowUpIcon, XIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-import { CaretSortIcon } from "@radix-ui/react-icons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import React from "react";
-import { StatusBadge } from "./StatusBadge";
+import { DeleteTaskConfirmationModal } from './DeleteTaskConfirmationModal';
+import { StatusBadge } from './StatusBadge';
 
 interface TaskListTableProps {
   tasks?: Task[];
   onDeleteTask?: (id: string) => Promise<void>;
   onSearch: (searchTerm: string) => void;
-  onSort: (sortBy: "createdAt" | "dueDate", sortOrder: "asc" | "desc") => void;
+  onSort: (sortBy: 'createdAt' | 'dueDate', sortOrder: 'asc' | 'desc') => void;
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (itemsPerPage: number) => void;
   currentPage: number;
@@ -51,8 +50,8 @@ interface TaskListTableProps {
   itemsPerPage: number;
   isLoading?: boolean;
   searchTerm: string;
-  sortBy: "createdAt" | "dueDate";
-  sortOrder: "asc" | "desc";
+  sortBy: 'createdAt' | 'dueDate';
+  sortOrder: 'asc' | 'desc';
 }
 
 export const TaskListTable = ({
@@ -98,26 +97,26 @@ export const TaskListTable = ({
       onSearch(e.target.value);
       setInternalSearchTerm(e.target.value);
     },
-    [onSearch]
+    [onSearch],
   );
 
   const handleClearSearch = useCallback(() => {
-    onSearch("");
-    setInternalSearchTerm("");
+    onSearch('');
+    setInternalSearchTerm('');
   }, []);
 
   const handleSort = useCallback(
-    (newSortBy: "createdAt" | "dueDate", newSortOrder: "asc" | "desc") => {
+    (newSortBy: 'createdAt' | 'dueDate', newSortOrder: 'asc' | 'desc') => {
       onSort(newSortBy, newSortOrder);
     },
-    [onSort]
+    [onSort],
   );
 
   const handleItemsPerPageChange = useCallback(
     (value: string) => {
       onItemsPerPageChange(Number(value));
     },
-    [onItemsPerPageChange]
+    [onItemsPerPageChange],
   );
 
   return (
@@ -165,24 +164,24 @@ export const TaskListTable = ({
               <TableHead>
                 <SortableHeaderButton
                   title="Due Date"
-                  sortState={sortBy === "dueDate" ? sortOrder : "none"}
+                  sortState={sortBy === 'dueDate' ? sortOrder : 'none'}
                   onSortAesc={() => {
-                    handleSort("dueDate", "asc");
+                    handleSort('dueDate', 'asc');
                   }}
                   onSortDesc={() => {
-                    handleSort("dueDate", "desc");
+                    handleSort('dueDate', 'desc');
                   }}
                 />
               </TableHead>
               <TableHead>
                 <SortableHeaderButton
                   title="Created At"
-                  sortState={sortBy === "createdAt" ? sortOrder : "none"}
+                  sortState={sortBy === 'createdAt' ? sortOrder : 'none'}
                   onSortAesc={() => {
-                    handleSort("createdAt", "asc");
+                    handleSort('createdAt', 'asc');
                   }}
                   onSortDesc={() => {
-                    handleSort("createdAt", "desc");
+                    handleSort('createdAt', 'desc');
                   }}
                 />
               </TableHead>
@@ -210,10 +209,10 @@ export const TaskListTable = ({
                   <TableCell>{task.name}</TableCell>
                   <TableCell>{task.description}</TableCell>
                   <TableCell>
-                    {format(new Date(task.dueDate), "do MMM yyyy")}
+                    {format(new Date(task.dueDate), 'do MMM yyyy')}
                   </TableCell>
                   <TableCell>
-                    {format(new Date(task.createdAt), "do MMM yyyy")}
+                    {format(new Date(task.createdAt), 'do MMM yyyy')}
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-center">
                     <StatusBadge
@@ -244,8 +243,8 @@ export const TaskListTable = ({
       </div>
       <div className="mt-4 flex justify-between items-center">
         <span>
-          Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-          {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{" "}
+          Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
+          {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{' '}
           items
         </span>
         <div className="flex gap-4 items-center">
@@ -283,16 +282,16 @@ const getTaskStatus = (dueDate: Date) => {
   const today = endOfDay(new Date());
 
   if (isBefore(dueDate, today)) {
-    return "Overdue";
+    return 'Overdue';
   }
 
   const sevenDaysFromNow = addDays(today, 7);
 
   if (isWithinInterval(dueDate, { start: today, end: sevenDaysFromNow })) {
-    return "Due soon";
+    return 'Due soon';
   }
 
-  return "Not Urgent";
+  return 'Not Urgent';
 };
 
 export const SortableHeaderButton = ({
@@ -304,7 +303,7 @@ export const SortableHeaderButton = ({
   title: string;
   onSortDesc: () => void;
   onSortAesc: () => void;
-  sortState: "asc" | "desc" | "none";
+  sortState: 'asc' | 'desc' | 'none';
 }) => {
   return (
     <div className="flex items-center space-x-2">
@@ -316,9 +315,9 @@ export const SortableHeaderButton = ({
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
-            {sortState === "desc" ? (
+            {sortState === 'desc' ? (
               <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : sortState === "asc" ? (
+            ) : sortState === 'asc' ? (
               <ArrowUpIcon className="ml-2 h-4 w-4" />
             ) : (
               <CaretSortIcon className="ml-2 h-4 w-4" />

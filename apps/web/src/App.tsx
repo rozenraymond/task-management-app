@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/client";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense } from 'react';
+import { queryClient } from '@/lib/client';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { Route, Routes } from 'react-router-dom';
 
-const TaskListPage = lazy(() => import("@/pages/TaskListPage"));
-const AddTaskPage = lazy(() => import("@/pages/AddTaskPage"));
-const EditTaskPage = lazy(() => import("@/pages/EditTaskPage"));
+const TaskListPage = lazy(() => import('@/pages/TaskListPage'));
+const AddTaskPage = lazy(() => import('@/pages/AddTaskPage'));
+const EditTaskPage = lazy(() => import('@/pages/EditTaskPage'));
 
 function App() {
   return (

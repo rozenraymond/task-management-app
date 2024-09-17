@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod';
+
 export type Task = {
   id: string;
   name: string;
@@ -11,12 +12,12 @@ export type Task = {
 export const taskFormSchema = z.object({
   name: z
     .string()
-    .min(1, "Task name is required")
-    .max(100, "Task name must be 100 characters or less"),
+    .min(1, 'Task name is required')
+    .max(100, 'Task name must be 100 characters or less'),
   description: z
     .string()
-    .min(1, "Task description is required.")
-    .max(500, "Task description must be 500 characters or less"),
+    .min(1, 'Task description is required.')
+    .max(500, 'Task description must be 500 characters or less'),
   dueDate: z
     .string()
     .datetime()
@@ -25,8 +26,8 @@ export const taskFormSchema = z.object({
         return new Date(date) >= new Date(new Date().setHours(0, 0, 0, 0));
       },
       {
-        message: "Due date must be today or in the future",
-      }
+        message: 'Due date must be today or in the future',
+      },
     ),
 });
 

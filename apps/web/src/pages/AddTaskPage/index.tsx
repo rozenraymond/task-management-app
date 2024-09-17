@@ -1,1 +1,1 @@
-export { AddTaskPage as default } from "./AddTaskPage";
+export { AddTaskPage as default } from './AddTaskPage';

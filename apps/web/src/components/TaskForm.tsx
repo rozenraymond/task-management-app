@@ -1,10 +1,17 @@
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CalendarIcon } from '@radix-ui/react-icons';
 import {
+  Task,
   TaskFormSchema,
   taskFormSchema,
-  Task,
-} from "@task-management-platform/validation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@task-management-platform/validation';
+import { format, startOfToday } from 'date-fns';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+
+import { Button } from './ui/button';
+import { Calendar } from './ui/calendar';
 import {
   Form,
   FormControl,
@@ -12,16 +19,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
-import { format, startOfToday } from "date-fns";
-import { Calendar } from "./ui/calendar";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Loader2 } from "lucide-react";
+} from './ui/form';
+import { Input } from './ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Textarea } from './ui/textarea';
 
 interface TaskFormProps {
   defaultValues?: Task;
@@ -37,9 +38,9 @@ export const TaskForm = ({
   const form = useForm<TaskFormSchema>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
-      name: defaultValues?.name || "",
-      description: defaultValues?.description || "",
-      dueDate: defaultValues?.dueDate ?? "",
+      name: defaultValues?.name || '',
+      description: defaultValues?.description || '',
+      dueDate: defaultValues?.dueDate ?? '',
     },
   });
 
@@ -88,14 +89,14 @@ export const TaskForm = ({
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={"outline"}
+                      variant={'outline'}
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal justify-between",
-                        !field.value && "text-muted-foreground"
+                        'w-[240px] pl-3 text-left font-normal justify-between',
+                        !field.value && 'text-muted-foreground',
                       )}
                     >
                       {field.value ? (
-                        format(field.value, "PP")
+                        format(field.value, 'PP')
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -120,7 +121,7 @@ export const TaskForm = ({
         />
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isSubmitting ? "Submitting..." : "Submit"}
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
     </Form>

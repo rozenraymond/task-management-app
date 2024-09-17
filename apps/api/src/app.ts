@@ -1,9 +1,10 @@
-import { PrismaClient, Prisma } from "@prisma/client";
-import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import { taskFormSchema } from "@task-management-platform/validation";
-import { validateRequestBody } from "./middleware/validator";
+import { Prisma, PrismaClient } from '@prisma/client';
+import { taskFormSchema } from '@task-management-platform/validation';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+
+import { validateRequestBody } from './middleware/validator';
 
 const prisma = new PrismaClient();
 const app = express();
@@ -11,13 +12,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/tasks", async (req, res) => {
+app.get('/tasks', async (req, res) => {
   const {
-    skip = "0",
-    take = "10",
-    searchTerm = "",
-    sortBy = "createdAt",
-    sortOrder = "desc",
+    skip = '0',
+    take = '10',
+    searchTerm = '',
+    sortBy = 'createdAt',
+    sortOrder = 'desc',
   } = req.query;
 
   const parsedSkip = Math.max(0, parseInt(skip as string, 10));
@@ -26,7 +27,7 @@ app.get("/tasks", async (req, res) => {
 
   const where: Prisma.TaskWhereInput = searchTerm
     ? {
-        OR: [{ name: { contains: searchTerm as string, mode: "insensitive" } }],
+        OR: [{ name: { contains: searchTerm as string, mode: 'insensitive' } }],
       }
     : {};
 
@@ -44,7 +45,7 @@ app.get("/tasks", async (req, res) => {
   res.json({ tasks, totalCount });
 });
 
-app.post("/task", validateRequestBody(taskFormSchema), async (req, res) => {
+app.post('/task', validateRequestBody(taskFormSchema), async (req, res) => {
   const { name, description, dueDate } = req.body;
   const task = await prisma.task.create({
     data: {
@@ -57,31 +58,29 @@ app.post("/task", validateRequestBody(taskFormSchema), async (req, res) => {
   res.json(task);
 });
 
-app.get("/task/:id", async (req, res) => {
+app.get('/task/:id', async (req, res) => {
   const { id } = req.params;
   const task = await prisma.task.findUnique({
     where: { id },
   });
 
   if (!task) {
-    res.status(404).json({ message: "Task not found" });
+    res.status(404).json({ message: 'Task not found' });
     return;
   }
 
   res.json(task);
 });
 
-app.put("/task/:id", validateRequestBody(taskFormSchema), async (req, res) => {
+app.put('/task/:id', validateRequestBody(taskFormSchema), async (req, res) => {
   const { id } = req.params;
-
-  console.log("id", id);
 
   const existingTask = await prisma.task.findUnique({
     where: { id },
   });
 
   if (!existingTask) {
-    return res.status(404).json({ message: "Task not found" });
+    return res.status(404).json({ message: 'Task not found' });
   }
 
   const { name, description, dueDate } = req.body;
@@ -98,7 +97,7 @@ app.put("/task/:id", validateRequestBody(taskFormSchema), async (req, res) => {
   res.json(task);
 });
 
-app.delete("/task/:id", async (req, res) => {
+app.delete('/task/:id', async (req, res) => {
   const { id } = req.params;
 
   const existingTask = await prisma.task.findUnique({
@@ -106,7 +105,7 @@ app.delete("/task/:id", async (req, res) => {
   });
 
   if (!existingTask) {
-    return res.status(404).json({ message: "Task not found" });
+    return res.status(404).json({ message: 'Task not found' });
   }
 
   const task = await prisma.task.delete({

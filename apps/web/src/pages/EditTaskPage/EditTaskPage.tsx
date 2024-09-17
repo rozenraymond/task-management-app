@@ -1,11 +1,12 @@
-import { TaskForm } from "@/components/TaskForm";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { TaskFormSchema } from "@task-management-platform/validation";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useTask, useUpdateTask } from "./hooks";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { endOfDay } from "date-fns";
+import { TaskForm } from '@/components/TaskForm';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { TaskFormSchema } from '@task-management-platform/validation';
+import { endOfDay } from 'date-fns';
+import { ChevronLeft, Loader2 } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
+import { useTask, useUpdateTask } from './hooks';
 
 export const EditTaskPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,7 +23,7 @@ export const EditTaskPage = () => {
         id,
         dueDate: endOfDay(value.dueDate).toISOString(),
       });
-      navigate("/");
+      navigate('/');
     }
   };
 

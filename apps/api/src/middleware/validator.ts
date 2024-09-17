@@ -1,7 +1,8 @@
-import { z } from "zod";
+import { NextFunction, Request, Response } from 'express';
+import { z } from 'zod';
 
 export const validateRequestBody = <T>(schema: z.ZodSchema<T>) => {
-  return (req: any, res: any, next: any) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
       next();
@@ -13,7 +14,7 @@ export const validateRequestBody = <T>(schema: z.ZodSchema<T>) => {
       }
 
       return res.status(500).json({
-        message: "Internal Server Error",
+        message: 'Internal Server Error',
       });
     }
   };
