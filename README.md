@@ -9,6 +9,12 @@ This monorepo contains a full-stack task management application that allows user
 
 To ensure the system performs efficiently with potentially tens of thousands of tasks, **pagination** has been implemented in both the **API** and the **web app**. This approach helps manage large volumes of data and prevents timeouts by limiting the number of tasks retrieved and displayed at once.
 
+
+
+https://github.com/user-attachments/assets/5b7d243f-2566-41b0-aaf3-c37761c7ed08
+
+
+
 ## Tech Stack
 
 ### Development Tools
@@ -87,3 +93,5 @@ The `docker-compose.yml` file is designed to closely emulate the production envi
 4. **Test Coverage**: Expand unit and integration test coverage, especially for edge cases and performance scenarios, ensuring the application remains robust and reliable as features are added.
 
 5. **Database Indexing**: Add indexing on frequently queried fields such as `taskName`, `dueDate`, and `status` to improve query performance as the number of tasks grows.
+
+6. **DX Improvement**: Implement multi-stage Docker builds for faster execution.
